@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Forms.Attributes;
 
 namespace WebAtividadeEntrevista.Models
 {
@@ -61,6 +62,14 @@ namespace WebAtividadeEntrevista.Models
         /// </summary>
         [Required]
         public string Sobrenome { get; set; }
+
+        /// <summary>
+        /// Sobrenome
+        /// </summary>
+        [Required(ErrorMessage = "O CPF é obrigatório.")]
+        [RegularExpression(@"^\d{3}\.\d{3}\.\d{3}-\d{2}$", ErrorMessage = "O CPF deve estar no formato 000.000.000-00")]
+        [CpfValidation(ErrorMessage = "O CPF informado é inválido.")]
+        public string CPF { get; set; }
 
         /// <summary>
         /// Telefone
