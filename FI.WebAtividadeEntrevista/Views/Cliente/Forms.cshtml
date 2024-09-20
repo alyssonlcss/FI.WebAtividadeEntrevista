@@ -135,7 +135,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Os beneficiários serão adicionados aqui -->
                         </tbody>
                     </table>
                 </div>
@@ -143,58 +142,5 @@
         </div>
     </div>
 
-    <script>
-        let beneficiarios = [];
-
-        document.getElementById('btnIncluir').addEventListener('click', function () {
-            const cpf = document.getElementById('CPFBeneficiario').value;
-            const nome = document.getElementById('NomeBeneficiario').value;
-
-            if (cpf && nome) {
-                // Adiciona beneficiário ao array
-                beneficiarios.push({ cpf, nome });
-
-                const tbody = document.getElementById('tabelaBeneficiarios').querySelector('tbody');
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                        <td>${cpf}</td>
-                        <td>${nome}</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm btnEdit">Alterar</button>
-                            <button class="btn btn-danger btn-sm btnDelete">Excluir</button>
-                        </td>
-                    `;
-                tbody.appendChild(tr);
-
-                // Limpa os campos de entrada
-                document.getElementById('CPFBeneficiario').value = '';
-                document.getElementById('NomeBeneficiario').value = '';
-
-                // Funcionalidade de edição
-                const btnEdit = tr.querySelector('.btnEdit');
-                btnEdit.addEventListener('click', function () {
-                    document.getElementById('CPFBeneficiario').value = cpf;
-                    document.getElementById('NomeBeneficiario').value = nome;
-                    tr.remove(); // Remove a linha atual
-                    beneficiarios = beneficiarios.filter(b => b.cpf !== cpf); // Remove do array
-                    // Atualiza o campo oculto
-                    document.getElementById('beneficiariosList').value = JSON.stringify(beneficiarios);
-                });
-
-                // Funcionalidade de exclusão
-                const btnDelete = tr.querySelector('.btnDelete');
-                btnDelete.addEventListener('click', function () {
-                    tr.remove(); // Remove a linha ao clicar em Excluir
-                    beneficiarios = beneficiarios.filter(b => b.cpf !== cpf); // Remove do array
-                    // Atualiza o campo oculto
-                    document.getElementById('beneficiariosList').value = JSON.stringify(beneficiarios);
-                });
-
-                // Atualiza o campo oculto com a lista de beneficiários
-                document.getElementById('beneficiariosList').value = JSON.stringify(beneficiarios);
-            } else {
-                alert('Por favor, preencha todos os campos.');
-            }
-        });
-    </script>
+    <script src="~/Scripts/BeneficiariosInList.js"></script>
 </form>

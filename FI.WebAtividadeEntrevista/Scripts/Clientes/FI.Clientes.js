@@ -1,58 +1,59 @@
-﻿
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $('#formCadastro').submit(function (e) {
         e.preventDefault();
+
+        // Monta o objeto com os dados do formulário e a lista de beneficiários
+        var dados = {
+            "Nome": $(this).find("#Nome").val(),
+            "CPF": $(this).find("#CPF").val(),
+            "CEP": $(this).find("#CEP").val(),
+            "Email": $(this).find("#Email").val(),
+            "Sobrenome": $(this).find("#Sobrenome").val(),
+            "Nacionalidade": $(this).find("#Nacionalidade").val(),
+            "Estado": $(this).find("#Estado").val(),
+            "Cidade": $(this).find("#Cidade").val(),
+            "Logradouro": $(this).find("#Logradouro").val(),
+            "Telefone": $(this).find("#Telefone").val(),
+            "Beneficiarios": JSON.parse($(this).find("#beneficiariosList").val()) // Converte a string para JSON
+        };
+
         $.ajax({
             url: urlPost,
             method: "POST",
-            data: {
-                "NOME": $(this).find("#Nome").val(),
-                "CPF": $(this).find("#CPF").val(),
-                "CEP": $(this).find("#CEP").val(),
-                "Email": $(this).find("#Email").val(),
-                "Sobrenome": $(this).find("#Sobrenome").val(),
-                "Nacionalidade": $(this).find("#Nacionalidade").val(),
-                "Estado": $(this).find("#Estado").val(),
-                "Cidade": $(this).find("#Cidade").val(),
-                "Logradouro": $(this).find("#Logradouro").val(),
-                "Telefone": $(this).find("#Telefone").val()
-            },
-            error:
-            function (r) {
+            contentType: "application/json", // Define o tipo de conteúdo como JSON
+            data: JSON.stringify(dados), // Serializa o objeto em uma string JSON
+            error: function (r) {
                 if (r.status == 400)
                     ModalDialog("Ocorreu um erro", r.responseJSON);
                 else if (r.status == 500)
                     ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
             },
-            success:
-            function (r) {
-                ModalDialog("Sucesso!", r)
+            success: function (r) {
+                ModalDialog("Sucesso!", r);
                 $("#formCadastro")[0].reset();
             }
         });
-    })
-    
-})
+    });
+});
 
 function ModalDialog(titulo, texto) {
     var random = Math.random().toString().replace('.', '');
-    var texto = '<div id="' + random + '" class="modal fade">                                                               ' +
-        '        <div class="modal-dialog">                                                                                 ' +
-        '            <div class="modal-content">                                                                            ' +
-        '                <div class="modal-header">                                                                         ' +
-        '                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>         ' +
-        '                    <h4 class="modal-title">' + titulo + '</h4>                                                    ' +
-        '                </div>                                                                                             ' +
-        '                <div class="modal-body">                                                                           ' +
-        '                    <p>' + texto + '</p>                                                                           ' +
-        '                </div>                                                                                             ' +
-        '                <div class="modal-footer">                                                                         ' +
-        '                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>             ' +
-        '                                                                                                                   ' +
-        '                </div>                                                                                             ' +
-        '            </div><!-- /.modal-content -->                                                                         ' +
-        '  </div><!-- /.modal-dialog -->                                                                                    ' +
-        '</div> <!-- /.modal -->                                                                                        ';
+    var texto = '<div id="' + random + '" class="modal fade">' +
+        '        <div class="modal-dialog">' +
+        '            <div class="modal-content">' +
+        '                <div class="modal-header">' +
+        '                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' +
+        '                    <h4 class="modal-title">' + titulo + '</h4>' +
+        '                </div>' +
+        '                <div class="modal-body">' +
+        '                    <p>' + texto + '</p>' +
+        '                </div>' +
+        '                <div class="modal-footer">' +
+        '                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>' +
+        '                </div>' +
+        '            </div><!-- /.modal-content -->' +
+        '  </div><!-- /.modal-dialog -->' +
+        '</div> <!-- /.modal -->';
 
     $('body').append(texto);
     $('#' + random).modal('show');

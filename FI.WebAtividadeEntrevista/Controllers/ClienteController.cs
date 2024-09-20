@@ -11,6 +11,8 @@ namespace WebAtividadeEntrevista.Controllers
 {
     public class ClienteController : Controller
     {
+        public bool Beneficiarios { get; private set; }
+
         public ActionResult Index()
         {
             return View();
@@ -26,7 +28,12 @@ namespace WebAtividadeEntrevista.Controllers
         public JsonResult Incluir(ClienteModel model)
         {
             BoCliente bo = new BoCliente();
-            
+
+            if (model.Beneficiarios == null || !model.Beneficiarios.Any())
+            {
+                ModelState.AddModelError("BeneficiariosList", "É necessário incluir pelo menos um beneficiário.");
+            }
+
             if (!this.ModelState.IsValid)
             {
                 List<string> erros = (from item in ModelState.Values
@@ -38,9 +45,9 @@ namespace WebAtividadeEntrevista.Controllers
             }
             else
             {
-                
+
                 model.Id = bo.Incluir(new Cliente()
-                {                    
+                {
                     CEP = model.CEP,
                     Cidade = model.Cidade,
                     Email = model.Email,
@@ -50,10 +57,16 @@ namespace WebAtividadeEntrevista.Controllers
                     Nome = model.Nome,
                     Sobrenome = model.Sobrenome,
                     CPF = model.CPF,
-                    Telefone = model.Telefone
+                    Telefone = model.Telefone,
+                    Beneficiarios = model.Beneficiarios.Select(b => new FI.AtividadeEntrevista.DML.Beneficiario()
+                    {
+                        CPF = b.CPF,
+                        Nome = b.Nome
+                    }).ToList()
                 });
 
-           
+
+
                 return Json("Cadastro efetuado com sucesso");
             }
         }

@@ -64,12 +64,18 @@ namespace WebAtividadeEntrevista.Models
         public string Sobrenome { get; set; }
 
         /// <summary>
-        /// Sobrenome
+        /// CPF
         /// </summary>
         [Required(ErrorMessage = "O CPF é obrigatório.")]
         [RegularExpression(@"^\d{3}\.\d{3}\.\d{3}-\d{2}$", ErrorMessage = "O CPF deve estar no formato 000.000.000-00")]
         [CpfValidation(ErrorMessage = "O CPF informado é inválido.")]
         public string CPF { get; set; }
+
+
+        /// <summary>
+        /// Lista de Beneficiários
+        /// </summary>
+        public List<Beneficiario> Beneficiarios { get; set; }
 
         /// <summary>
         /// Telefone

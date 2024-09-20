@@ -32,7 +32,7 @@ namespace FI.AtividadeEntrevista.DAL
             DataSet ds = base.Consultar("FI_SP_IncClienteV2", parametros);
             long ret = 0;
             if (ds.Tables[0].Rows.Count > 0)
-                long.TryParse(ds.Tables[0].Rows[0][0].ToString(), out ret);
+                long.TryParse(ds.Tables[0].Rows[0]["IdCliente"].ToString(), out ret);
             return ret;
         }
 
