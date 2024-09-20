@@ -6813,4 +6813,53 @@ td.visible-print {
   td.hidden-print {
     display: none !important;
   }
+
+}
+
+#btnIncluir {
+    margin-top: 30px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+.modal-header .close {
+    padding: 0;
+    margin: 0;
+}
+
+/* Alinha os botões horizontalmente */
+#tabelaBeneficiarios td {
+    white-space: nowrap; /* Impede que os botões quebrem linha */
+}
+
+/* Define a cor azul antiga para ambos os botões */
+.btn-acao {
+    background-color: #428bca; /* Cor azul especificada */
+    border-color: #357ebd; /* Cor da borda */
+    color: white; /* Texto em branco */
+}
+
+
+/* Mantém os botões lado a lado */
+#tabelaBeneficiarios td button {
+    display: inline-block;
+    margin-right: 5px; /* Espaçamento entre os botões */
+}
+
+/* Estilo do botão "Voltar" com cor vermelha */
+.btn-voltar {
+    background-color: #d9534f; /* Vermelho padrão do Bootstrap */
+    border-color: #d43f3a; /* Borda de um tom mais escuro */
+    color: white; /* Texto em branco */
+}
+
+/* Garantir que o botão Voltar mantenha sua classe e estilo */
+.btn-danger {
+    background-color: #d9534f; /* Vermelho padrão */
+    border-color: #d43f3a;
+    color: white;
 }

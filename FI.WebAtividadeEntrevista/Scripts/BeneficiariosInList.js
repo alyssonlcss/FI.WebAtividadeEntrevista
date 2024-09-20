@@ -6,11 +6,10 @@ document.getElementById('btnIncluir').addEventListener('click', function (e) {
     const CPF = document.getElementById('CPFBeneficiario').value;
     const Nome = document.getElementById('NomeBeneficiario').value;
 
-    
     const cpfExistente = beneficiarios.some(b => b.CPF === CPF);
 
     if (cpfExistente) {
-        alert('Esse CPF ja foi adicionado. Por favor, insira um CPF unico.');
+        alert('Esse CPF já foi adicionado. Por favor, insira um CPF único.');
         return;
     }
 
@@ -24,16 +23,14 @@ document.getElementById('btnIncluir').addEventListener('click', function (e) {
             <td>${Nome}</td>
             <td>
                 <button class="btn btn-primary btn-sm btnEdit">Alterar</button>
-                <button class="btn btn-danger btn-sm btnDelete">Excluir</button>
+                <button class="btn btn-acao btn-sm btnDelete">Excluir</button> <!-- Classe btn-acao para azul -->
             </td>
         `;
         tbody.appendChild(tr);
 
-        
         document.getElementById('CPFBeneficiario').value = '';
         document.getElementById('NomeBeneficiario').value = '';
 
-        
         const btnEdit = tr.querySelector('.btnEdit');
         btnEdit.addEventListener('click', function () {
             document.getElementById('CPFBeneficiario').value = CPF;
@@ -43,7 +40,6 @@ document.getElementById('btnIncluir').addEventListener('click', function (e) {
             document.getElementById('beneficiariosList').value = JSON.stringify(beneficiarios);
         });
 
-        
         const btnDelete = tr.querySelector('.btnDelete');
         btnDelete.addEventListener('click', function () {
             tr.remove();
@@ -51,7 +47,6 @@ document.getElementById('btnIncluir').addEventListener('click', function (e) {
             document.getElementById('beneficiariosList').value = JSON.stringify(beneficiarios);
         });
 
-        
         document.getElementById('beneficiariosList').value = JSON.stringify(beneficiarios);
     } else {
         alert('Por favor, preencha todos os campos.');
