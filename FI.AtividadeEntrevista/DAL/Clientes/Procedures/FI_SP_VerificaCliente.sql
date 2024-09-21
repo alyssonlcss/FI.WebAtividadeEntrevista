@@ -1,0 +1,10 @@
+CREATE PROCEDURE [dbo].[FI_SP_VerificaCliente]
+    @CPF VARCHAR(14)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT *
+    FROM [dbo].[CLIENTES]
+    WHERE CPF = @CPF;
+END

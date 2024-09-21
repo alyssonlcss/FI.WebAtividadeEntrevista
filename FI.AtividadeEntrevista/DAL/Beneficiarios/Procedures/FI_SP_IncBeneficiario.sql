@@ -1,0 +1,11 @@
+CREATE PROCEDURE [dbo].[FI_SP_IncBeneficiario]
+    @CPF VARCHAR(14),
+    @Nome VARCHAR(50),
+    @IdCliente BIGINT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO [dbo].[BENEFICIARIOS] (CPF, NOME, IDCLIENTE)
+    VALUES (@CPF, @Nome, @IdCliente);
+END

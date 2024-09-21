@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FI.AtividadeEntrevista.DML;
+using FI.AtividadeEntrevista.BLL.FI.AtividadeEntrevista.BLL;
 
 namespace WebAtividadeEntrevista.Controllers
 {
@@ -28,12 +29,16 @@ namespace WebAtividadeEntrevista.Controllers
         public JsonResult Incluir(ClienteModel model)
         {
             BoCliente bo = new BoCliente();
+            BoBeneficiario boBeneficiario = new BoBeneficiario();
 
             if (model.Beneficiarios == null || !model.Beneficiarios.Any())
             {
                 ModelState.AddModelError("BeneficiariosList", "É necessário incluir pelo menos um beneficiário.");
             }
-
+            if (bo.VerificarExistencia(model.CPF))
+            {
+                ModelState.AddModelError("CPF", "Já existe um cliente cadastrado com este CPF.");
+            }
             if (!this.ModelState.IsValid)
             {
                 List<string> erros = (from item in ModelState.Values
@@ -43,9 +48,10 @@ namespace WebAtividadeEntrevista.Controllers
                 Response.StatusCode = 400;
                 return Json(string.Join(Environment.NewLine, erros));
             }
+
             else
             {
-
+                
                 model.Id = bo.Incluir(new Cliente()
                 {
                     CEP = model.CEP,
@@ -65,6 +71,11 @@ namespace WebAtividadeEntrevista.Controllers
                     }).ToList()
                 });
 
+                boBeneficiario.Incluir(model.Beneficiarios.Select(b => new FI.AtividadeEntrevista.DML.Beneficiario()
+                {
+                    CPF = b.CPF,
+                    Nome = b.Nome
+                }).ToList(), model.Id);
 
 
                 return Json("Cadastro efetuado com sucesso");
